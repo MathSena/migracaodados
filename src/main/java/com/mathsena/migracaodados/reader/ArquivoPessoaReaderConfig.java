@@ -16,19 +16,20 @@ import java.util.Date;
 public class ArquivoPessoaReaderConfig {
 
     @Bean
-    public FlatFileItemReader<Pessoa> arquivoPessoaReader(){
+    public FlatFileItemReader<Pessoa> arquivoPessoaReader() {
         return new FlatFileItemReaderBuilder<Pessoa>()
                 .name("arquivoPessoaReader")
                 .resource(new FileSystemResource("files/pessoas.csv"))
                 .delimited()
                 .names("nome", "email", "dataNascimento", "idade", "id")
-                .addComment("---")
+                .addComment("--")
                 .fieldSetMapper(fieldSetMapper())
                 .build();
     }
 
     private FieldSetMapper<Pessoa> fieldSetMapper() {
         return new FieldSetMapper<Pessoa>() {
+
             @Override
             public Pessoa mapFieldSet(FieldSet fieldSet) throws BindException {
                 Pessoa pessoa = new Pessoa();

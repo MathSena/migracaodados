@@ -17,7 +17,7 @@ public class BancoDadosBancariosWriterConfig {
             @Qualifier("appDataSource") DataSource dataSource){
         return new JdbcBatchItemWriterBuilder<DadosBancarios>()
                 .dataSource(dataSource)
-                .sql("INSERT INTO dados_bancarios(id, pessoa_id, agecia, conta, banco) values (:id,:pessoa_id,:agencia,:conta,:banco)")
+                .sql("INSERT INTO dados_bancarios(id, pessoa_id, agencia, conta, banco) values (:id, :pessoaId, :agencia, :conta, :banco)")
                 .beanMapped()
                 .build();
     };

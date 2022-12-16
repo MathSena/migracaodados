@@ -18,16 +18,17 @@ public class BancoPessoaWriterConfig {
 
     @Bean
     public JdbcBatchItemWriter<Pessoa> bancoPessoaWriter(
-            @Qualifier("appDataSource")DataSource dataSource){
+            @Qualifier("appDataSource") DataSource dataSource) {
         return new JdbcBatchItemWriterBuilder<Pessoa>()
                 .dataSource(dataSource)
-                .sql("INSERT INTO pessoa(id, nome, email, data_nascimento, idade) values (?,?,?,?,?)")
+                .sql("INSERT INTO pessoa (id, nome, email, data_nascimento, idade) VALUES (?, ?, ?, ?, ?)")
                 .itemPreparedStatementSetter(itemPreparedStatementSetter())
                 .build();
     }
 
     private ItemPreparedStatementSetter<Pessoa> itemPreparedStatementSetter() {
         return new ItemPreparedStatementSetter<Pessoa>() {
+
             @Override
             public void setValues(Pessoa pessoa, PreparedStatement ps) throws SQLException {
                 ps.setInt(1, pessoa.getId());
@@ -36,6 +37,7 @@ public class BancoPessoaWriterConfig {
                 ps.setDate(4, new Date(pessoa.getDataNascimento().getTime()));
                 ps.setInt(5, pessoa.getIdade());
             }
+
         };
     }
 

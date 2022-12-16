@@ -6,25 +6,25 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MigrarDadosBancariosStepConfig {
 
-
     @Autowired
-    public StepBuilderFactory stepBuilderFactory;
+    private StepBuilderFactory stepBuilderFactory;
 
+    @Bean
     public Step migrarDadosBancariosStep(
             ItemReader<DadosBancarios> arquivoDadosBancariosReader,
-            ItemWriter<DadosBancarios> bancoDadosBancariosWriter    ){
-
+            ItemWriter<DadosBancarios> bancoDadosBancariosWriter) {
         return stepBuilderFactory
-                .get("migrarPessoaStep")
-                .<DadosBancarios, DadosBancarios> chunk(1)
+                .get("migrarDadosBancariosStep")
+                .<DadosBancarios, DadosBancarios>chunk(10000)
                 .reader(arquivoDadosBancariosReader)
                 .writer(bancoDadosBancariosWriter)
                 .build();
-
     }
 }
+
